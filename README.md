@@ -6,18 +6,6 @@
 
 **MedPulso** é um simulador de monitor cardíaco baseado em ESP32 que reproduz batimentos cardíacos de forma visual e sonora, com controle local e remoto via protocolo MQTT.
 
----
-
-## 📋 Índice
-
-- [Sobre o Projeto](#sobre-o-projeto)
-- [Funcionalidades](#funcionalidades)
-- [Demonstração](#demonstração)
-- [Hardware Necessário](#hardware-necessário)
-- [Diagrama de Conexões](#diagrama-de-conexões)
-- [Como Usar](#como-usar)
-- [Arquitetura do Sistema](#arquitetura-do-sistema)
-- [Comunicação MQTT](#comunicação-mqtt)
 
 ---
 
