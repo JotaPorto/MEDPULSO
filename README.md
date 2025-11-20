@@ -154,14 +154,11 @@ mosquitto_pub -h broker.hivemq.com -t "medpulso/comando" -m "DESLIGAR"
 
 1. Acesse: [HiveMQ Web Client](http://www.hivemq.com/demos/websocket-client/)
 2. Conecte ao broker: `broker.hivemq.com` (porta 8000 WebSocket)
-3. **Subscribe** no tópico: `medpulso/status` e `medpulso/bpm`
-4. **Publish** comandos no tópico: `medpulso/comando`
+3. **Publish** comandos no tópico: `medpulso/comando`
 
 **Comandos disponíveis:**
 - `LIGAR` ou `ON` ou `START` → Ativa o monitor
 - `DESLIGAR` ou `OFF` ou `STOP` → Desativa o monitor
-- 
-```
 
----
+```
 
