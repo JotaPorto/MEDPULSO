@@ -1,164 +1,246 @@
 # MedPulso - Monitor Cardíaco IoT
 
-[![Wokwi](https://img.shields.io/badge/Simula%C3%A7%C3%A3o-Wokwi-green)](https://wokwi.com)
-[![ESP32](https://img.shields.io/badge/Plataforma-ESP32-blue)](https://www.espressif.com/)
-[![MQTT](https://img.shields.io/badge/Protocolo-MQTT-orange)](https://mqtt.org/)
+> Simulador de batimento cardíaco com controle remoto via MQTT e visualização em tempo real
 
-**MedPulso** é um simulador de monitor cardíaco baseado em ESP32 que reproduz batimentos cardíacos de forma visual e sonora, com controle local e remoto via protocolo MQTT.
-
+[![Wokwi](https://img.shields.io/badge/Simular-Wokwi-green)](https://wokwi.com)
+[![ESP32](https://img.shields.io/badge/ESP32-DevKit-blue)]()
+[![MQTT](https://img.shields.io/badge/MQTT-HiveMQ-orange)]()
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)]()
 
 ---
 
-## 🎯 Sobre o Projeto
+## 📋 Sobre o Projeto
 
-O **MedPulso** foi desenvolvido como um projeto educacional de IoT (Internet das Coisas) que simula um monitor de frequência cardíaca. O sistema permite:
+**MedPulso** é um monitor cardíaco IoT que simula batimentos cardíacos de forma realista através de LED e buzzer, com controle local via potenciômetro ou um medidor de pulso, e controle remoto via protocolo MQTT. Ideal para educação, demonstrações de IoT e conceitos de telemedicina.
 
-- 📊 Simulação realista de batimentos cardíacos (som "LUB-DUB")
-- 🎛️ Controle local através de potenciômetro, simulando o medidor de pulso (40-180 BPM)
-- 🌐 Controle remoto via internet usando protocolo MQTT
+### ✨ Funcionalidades
+
+- 🫀 Simulação realista de batimento cardíaco (som "LUB-DUB")
+- 📊 Monitoramento de BPM em tempo real (40-180 BPM)
+- 🌐 Controle remoto via MQTT pela internet
 - 💡 Feedback visual (LED) e sonoro (Buzzer)
-- 📡 Telemetria em tempo real via MQTT
-
-### 🎓 Objetivo Educacional
-
-Demonstrar conceitos de:
-- Programação de microcontroladores (ESP32)
-- Comunicação Wi-Fi e protocolos TCP/IP
-- Arquitetura pub/sub com MQTT
-- Sensores analógicos e atuadores
-- Internet das Coisas (IoT)
-
----
-
-## ✨ Funcionalidades
-
-### Controle Local
-- ✅ Ajuste de BPM via potenciômetro (40-180 BPM)
-- ✅ LED piscante sincronizado com batimentos
-- ✅ Buzzer reproduzindo som cardíaco realista
-
-### Controle Remoto (MQTT)
-- ✅ Comandos: `LIGAR`, `DESLIGAR`
-- ✅ Feedback de status em tempo real
-
-### Classificação Médica
-- **< 60 BPM**: Bradicardia (Baixo)
-- **60-100 BPM**: Normal (Repouso)
-- **100-140 BPM**: Elevado (Exercício)
-- **> 140 BPM**: Taquicardia (Alto)
-
----
-
-## 🎬 Demonstração
-
-### Serial Monitor
-```
-╔════════════════════════════════════╗
-║   MedPulso - Monitor Cardíaco      ║
-║   Simulador de Batimento Cardíaco  ║
-╚════════════════════════════════════╝
-
-✓ WiFi Conectado!
-  IP: 192.168.1.100
-
-📡 Conectando ao MQTT...Conectado!
-   Inscrito em: medpulso/comando
-
-BPM: 72 | Status: NORMAL | Potenciômetro: 1800
-BPM: 75 | Status: NORMAL | Potenciômetro: 1950
-BPM: 78 | Status: NORMAL | Potenciômetro: 2100
-```
-
-### Comandos MQTT
-```bash
-# Ligar monitor
-mosquitto_pub -h broker.hivemq.com -t "medpulso/comando" -m "LIGAR"
-
-# Desligar monitor
-mosquitto_pub -h broker.hivemq.com -t "medpulso/comando" -m "DESLIGAR"
-
-```
-
----
-
-## 🛠️ Hardware Necessário
-
-### Componentes
-
-| Componente | Quantidade | Especificação |
-|------------|------------|---------------|
-| ESP32 | 1 | Qualquer versão com Wi-Fi |
-| LED Vermelho 5mm | 1 | Tensão: 2-3V |
-| Buzzer Piezoelétrico | 1 | Passivo (controlável por PWM) |
-| Potenciômetro ou Sensor de Pulso | 1 | 10kΩ linear (B10K) |
-
-> *Não necessário na simulação Wokwi
-
-### Requisitos de Software
-
-- **Arduino IDE** 1.8.x ou superior (ou PlatformIO)
-- **Biblioteca**: PubSubClient v2.8.0
-- **Placa**: ESP32 Board Package
-
----
-
-## 🔌 Diagrama de Conexões
-
-```
-                    ╔═══════════════════════════════╗
-                    ║      ESP32 DevKit V1          ║
-                    ║                               ║
-    LED (Vermelho)  ║  GPIO 5       ●───────────●  ║  Anodo (+)
-                    ║                               ║
-                    ║  GND.1        ●───────────●  ║  Catodo (-)
-                    ║                               ║
-    BUZZER          ║  GPIO 18      ●───────────●  ║  Pino 1 (+)
-                    ║                               ║
-                    ║  GND.2        ●───────────●  ║  Pino 2 (-)
-                    ║                               ║
-    POTENCIÔMETRO   ║  3V3          ●───────────●  ║  VCC
-                    ║                               ║
-                    ║  GPIO 33      ●───────────●  ║  SIG (Wiper)
-                    ║                               ║
-                    ║  GND.1        ●───────────●  ║  GND
-                    ║                               ║
-                    ╚═══════════════════════════════╝
-```
-
-### Tabela de Conexões
-
-| ESP32 | → | Componente |
-|-------|---|------------|
-| GPIO 5 | → | LED Anodo (+) |
-| GND.1 | → | LED Catodo (-) |
-| GPIO 18 | → | Buzzer Positivo |
-| GND.2 | → | Buzzer Negativo |
-| 3V3 | → | Potenciômetro VCC |
-| GPIO 33 | → | Potenciômetro SIG |
-| GND.1 | → | Potenciômetro GND |
+- 📈 Classificação médica automática (bradicardia, normal, elevado, taquicardia)
 
 ---
 
 ## 🚀 Como Usar
 
-### Modo Local (Potenciômetro)
+### Reproduzir o Projeto
 
-1. Ligue o ESP32
-2. Aguarde conexão Wi-Fi e MQTT (2 beeps de confirmação)
-3. Gire o potenciômetro para ajustar BPM
-4. Observe LED piscando e buzzer tocando
+1. **Acesse o simulador Wokwi**
+   - Clone este repositório
+   - Abra o projeto no [Wokwi](https://wokwi.com)
 
-### Modo Remoto (MQTT)
+2. **Carregue os arquivos**
+   - `diagram.json` - Esquema de conexões
+   - `sketch.ino` - Código fonte
 
-#### Via HiveMQ Web Client
+3. **Inicie a simulação**
+   - Clique em "Start Simulation"
+   - Aguarde conexão Wi-Fi e MQTT
 
-1. Acesse: [HiveMQ Web Client](http://www.hivemq.com/demos/websocket-client/)
-2. Conecte ao broker: `broker.hivemq.com` (porta 8000 WebSocket)
-3. **Publish** comandos no tópico: `medpulso/comando`
+4. **Controle Local**
+   - Gire o potenciômetro para ajustar BPM (40-180)
+   - Observe LED piscando e buzzer tocando
 
-**Comandos disponíveis:**
-- `LIGAR` ou `ON` ou `START` → Ativa o monitor
-- `DESLIGAR` ou `OFF` ou `STOP` → Desativa o monitor
+5. **Controle Remoto (MQTT)**
+   - Acesse: [HiveMQ Web Client](http://www.hivemq.com/demos/websocket-client/)
+   - Conecte ao broker: `broker.hivemq.com`
+   - Publique comandos no tópico: `medpulso/comando`
+     - `LIGAR` - Ativa o monitor
+     - `DESLIGAR` - Desativa o monitor
+
+---
+
+## 💻 Software
+
+### Estrutura do Código
+```
+MedPulso/
+│
+├── sketch.ino          # Código principal
+├── diagram.json        # Configuração Wokwi
+└── README.md          # Documentação
+```
+
+### Bibliotecas Utilizadas
+
+| Biblioteca | Versão | Função |
+|------------|--------|--------|
+| `WiFi.h` | Nativa | Conexão Wi-Fi ESP32 |
+| `PubSubClient.h` | 2.8.0 | Comunicação MQTT |
+
+### Funções Principais
+```cpp
+setup()              // Inicialização do sistema
+loop()               // Loop principal
+conectarWiFi()       // Estabelece conexão Wi-Fi
+reconectarMQTT()     // Mantém conexão MQTT
+callback()           // Processa comandos MQTT
+calcularBPM()        // Converte potenciômetro em BPM
+simularBatimento()   // Gera padrão LUB-DUB
+```
+
+### Variáveis de Controle
+
+- `monitorAtivo` (bool) - Estado ligado/desligado
+- `bpm` (int) - Batimentos por minuto
+- `intervaloBatimento` (int) - Tempo entre batimentos
+- `ultimoBatimento` (unsigned long) - Timestamp
+
+---
+
+## 🔧 Hardware
+
+### Plataforma de Desenvolvimento
+
+- **ESP32 DevKit V1**
+  - Microcontrolador: ESP32-WROOM-32
+  - Clock: 240 MHz (dual-core)
+  - Wi-Fi: 802.11 b/g/n
+  - ADC: 12 bits (0-4095)
+  - PWM: 16 canais
+
+### Componentes
+
+| Componente | Quantidade | Especificação |
+|------------|------------|---------------|
+| ESP32 | 1 | Placa de desenvolvimento |
+| LED Vermelho | 1 | 5mm, difuso |
+| Buzzer Piezoelétrico | 1 | Passivo, 3.3V |
+| Potenciômetro | 1 | 10kΩ, linear |
+
+### Pinout
+```
+ESP32          Componente
+─────────────────────────────
+GPIO 5    →    LED (Anodo)
+GND.1     →    LED (Catodo)
+
+GPIO 18   →    Buzzer (+)
+GND.2     →    Buzzer (-)
+
+3V3       →    Potenciômetro (VCC)
+GPIO 33   →    Potenciômetro (SIG)
+GND.1     →    Potenciômetro (GND)
+```
+
+### Diagrama de Conexões
+```
+                  ╔═══════════════╗
+                  ║    ESP32      ║
+                  ╠═══════════════╣
+    LED ────────→ ║ GPIO 5        ║
+                  ║ GND.1         ║ ←──── LED (-)
+                  ║               ║
+    Buzzer ─────→ ║ GPIO 18       ║
+                  ║ GND.2         ║ ←──── Buzzer (-)
+                  ║               ║
+    Pot (VCC) ──→ ║ 3V3           ║
+    Pot (SIG) ──→ ║ GPIO 33       ║
+    Pot (GND) ──→ ║ GND.1         ║
+                  ╚═══════════════╝
+```
+
+### Observações
+
+- ⚠️ **Projeto virtual:** Simulado no Wokwi (sem hardware físico necessário)
+- 💡 **Versão física:** Adicionar resistor 220Ω no LED
+
+---
+
+## 📡 Comunicação
+
+### Arquitetura de Rede
+```
+[ESP32] ←─ Wi-Fi ─→ [Internet] ←─ TCP/IP ─→ [Broker MQTT] ←→ [Clientes]
+```
+
+### Pilha de Protocolos
+
+| Camada | Protocolo | Descrição |
+|--------|-----------|-----------|
+| Aplicação | MQTT v3.1.1 | Pub/Sub de mensagens |
+| Transporte | TCP | Conexão confiável |
+| Rede | IPv4 | Endereçamento IP (DHCP) |
+| Enlace | Wi-Fi 802.11n | Comunicação sem fio 2.4GHz |
+
+### Configuração Wi-Fi
+```cpp
+SSID:     "Wokwi-GUEST"
+Password: "" (aberto)
+Channel:  6
+Mode:     Station (STA)
+IP:       DHCP automático
+```
+
+### Configuração MQTT
+```cpp
+Broker:   broker.hivemq.com
+Porta:    1883 (TCP)
+QoS:      0 (Fire and Forget)
+ClientID: "MedPulso_" + random(HEX)
+```
+
+### Tópicos MQTT
+
+| Tópico | Tipo | Direção | Descrição |
+|--------|------|---------|-----------|
+| `medpulso/comando` | SUB | Cliente → ESP32 | Recebe comandos de controle |
+
+### Mensagens
+
+**Comandos (Subscribe):**
+```
+Topic: medpulso/comando
+Payloads aceitos:
+  - "LIGAR" / "ON" / "START"
+  - "DESLIGAR" / "OFF" / "STOP"
 
 ```
 
+**Status (Publish):**
+```
+Topic: medpulso/status
+Exemplos:
+  - "Monitor ATIVADO"
+  - "Monitor DESATIVADO"
+  - "ESP32 Online"
+```
+
+### Interface Serial
+```cpp
+Protocolo: UART
+Baudrate:  115200
+Pinos:     TX0, RX0
+Uso:       Debug e monitoramento
+```
+
+### Interface ADC
+```cpp
+Pino:       GPIO 33 (ADC1_CH5)
+Resolução:  12 bits (0-4095)
+Tensão:     0-3.3V
+Conversão:  0-4095 → 40-180 BPM
+```
+
+### Interface PWM
+```cpp
+Pino:        GPIO 18
+Frequências: 150Hz (LUB), 100Hz (DUB)
+Duty Cycle:  50%
+Função:      tone() / noTone()
+```
+
+---
+
+## 🎯 Classificação de BPM
+
+| Faixa | Classificação | Descrição |
+|-------|---------------|-----------|
+| < 60 | BRADICARDIA | Frequência baixa (atletas/problema) |
+| 60-100 | NORMAL | Repouso saudável |
+| 100-140 | ELEVADO | Exercício leve/moderado |
+| > 140 | TAQUICARDIA | Exercício intenso/alteração |
+
+```
