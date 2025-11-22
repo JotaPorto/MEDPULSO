@@ -11,7 +11,7 @@
 
 ## 📋 Sobre o Projeto
 
-**MedPulso** é um monitor cardíaco IoT que simula batimentos cardíacos de forma realista através de LED e buzzer, com controle local via potenciômetro ou um medidor de pulso, e controle remoto via protocolo MQTT. Ideal para educação, demonstrações de IoT e conceitos de telemedicina.
+**MedPulso** é um monitor cardíaco IoT que simula batimentos cardíacos de forma realista através de LED e buzzer, com controle local via um medidor de pulso, e controle remoto via protocolo MQTT. Ideal para educação, demonstrações de IoT e conceitos de telemedicina.
 
 ### ✨ Funcionalidades
 
@@ -40,7 +40,7 @@
    - Aguarde conexão Wi-Fi e MQTT
 
 4. **Controle Local**
-   - Gire o potenciômetro para ajustar BPM (40-180)
+   - Acione o sensor para ajustar BPM (40-180)
    - Observe LED piscando e buzzer tocando
 
 5. **Controle Remoto (MQTT)**
@@ -108,7 +108,7 @@ simularBatimento()   // Gera padrão LUB-DUB
 | ESP32 | 1 | Placa de desenvolvimento |
 | LED Vermelho | 1 | 5mm, difuso |
 | Buzzer Piezoelétrico | 1 | Passivo, 3.3V |
-| Potenciômetro | 1 | 10kΩ, linear |
+| Sensor | 1 | 3.3V |
 
 ### Pinout
 ```
@@ -120,9 +120,9 @@ GND.1     →    LED (Catodo)
 GPIO 18   →    Buzzer (+)
 GND.2     →    Buzzer (-)
 
-3V3       →    Potenciômetro (VCC)
-GPIO 33   →    Potenciômetro (SIG)
-GND.1     →    Potenciômetro (GND)
+3V3       →    Sensor (VCC)
+GPIO 35   →    Sensor (OUT0)
+GND.1     →    Sensor (GND)
 ```
 
 ### Diagrama de Conexões
@@ -136,9 +136,9 @@ GND.1     →    Potenciômetro (GND)
     Buzzer ─────→ ║ GPIO 18       ║
                   ║ GND.2         ║ ←──── Buzzer (-)
                   ║               ║
-    Pot (VCC) ──→ ║ 3V3           ║
-    Pot (SIG) ──→ ║ GPIO 33       ║
-    Pot (GND) ──→ ║ GND.1         ║
+    Sen (VCC) ──→ ║ 3V3           ║
+    Sen (OUT0) ─→ ║ GPIO 35       ║
+    Sen (GND) ──→ ║ GND.1         ║
                   ╚═══════════════╝
 ```
 
@@ -218,7 +218,7 @@ Uso:       Debug e monitoramento
 
 ### Interface ADC
 ```cpp
-Pino:       GPIO 33 (ADC1_CH5)
+Pino:       GPIO 35 (ADC1_CH5)
 Resolução:  12 bits (0-4095)
 Tensão:     0-3.3V
 Conversão:  0-4095 → 40-180 BPM
