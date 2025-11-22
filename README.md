@@ -33,7 +33,10 @@
 
 2. **Carregue os arquivos**
    - `diagram.json` - Esquema de conexões
+   - `chip.chip.json` - Esquema de conexões para o sensor
    - `sketch.ino` - Código fonte
+   - `chip.chip.c` - Código fonte para o sensor
+   - `libraries.txt.` - Biblioteca
 
 3. **Inicie a simulação**
    - Clique em "Start Simulation"
