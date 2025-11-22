@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "author": "João Pedro",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": -22.8,
+      "left": 339.8,
+      "attrs": { "color": "red" }
+    },
+    { "type": "wokwi-buzzer", "id": "bz1", "top": 184.8, "left": 376.2, "attrs": {} },
+    { "type": "wokwi-potentiometer", "id": "pot1", "top": 17.9, "left": 451, "attrs": {} }
+  ],
+  "connections": [
+    [ "esp:TX0", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX0", "$serialMonitor:TX", "", [] ],
+    [ "esp:D5", "led1:A", "green", [ "v0" ] ],
+    [ "led1:C", "esp:GND.1", "black", [ "v0" ] ],
+    [ "esp:D18", "bz1:1", "blue", [ "v0" ] ],
+    [ "bz1:2", "esp:GND.1", "black", [ "v0" ] ],
+    [ "pot1:VCC", "esp:3V3", "red", [ "v0" ] ],
+    [ "pot1:GND", "esp:GND.1", "black", [ "v0" ] ],
+    [ "pot1:SIG", "esp:D33", "yellow", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}
