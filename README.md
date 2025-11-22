@@ -77,7 +77,7 @@ loop()               // Loop principal
 conectarWiFi()       // Estabelece conexão Wi-Fi
 reconectarMQTT()     // Mantém conexão MQTT
 callback()           // Processa comandos MQTT
-calcularBPM()        // Converte potenciômetro em BPM
+calcularBPM()        // Converte valor do sensor em BPM
 simularBatimento()   // Gera padrão LUB-DUB
 ```
 
