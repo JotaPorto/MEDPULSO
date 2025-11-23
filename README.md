@@ -200,15 +200,6 @@ Payloads aceitos:
 
 ```
 
-**Status (Publish):**
-```
-Topic: medpulso/status
-Exemplos:
-  - "Monitor ATIVADO"
-  - "Monitor DESATIVADO"
-  - "ESP32 Online"
-```
-
 ### Interface Serial
 ```cpp
 Protocolo: UART
