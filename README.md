@@ -111,7 +111,7 @@ simularBatimento()   // Gera padrão LUB-DUB
 | ESP32 | 1 | Placa de desenvolvimento |
 | LED Vermelho | 1 | 5mm, difuso |
 | Buzzer Piezoelétrico | 1 | Passivo, 3.3V |
-| Sensor | 1 | 3.3V |
+| Sensor de Pulso | 1 | 3.3V |
 
 ### Pinout
 ```
@@ -148,7 +148,6 @@ GND.1     →    Sensor (GND)
 ### Observações
 
 - ⚠️ **Projeto virtual:** Simulado no Wokwi (sem hardware físico necessário)
-- 💡 **Versão física:** Adicionar resistor 220Ω no LED
 
 ---
 
