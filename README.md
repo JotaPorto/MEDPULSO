@@ -179,9 +179,8 @@ IP:       DHCP automático
 ### Configuração MQTT
 ```cpp
 Broker:   broker.hivemq.com
-Porta:    1883 (TCP)
+Porta:    8884 (TCP)
 QoS:      0 (Fire and Forget)
-ClientID: "MedPulso_" + random(HEX)
 ```
 
 ### Tópicos MQTT
